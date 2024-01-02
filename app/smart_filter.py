@@ -22,7 +22,7 @@ class SmartFilter:
                             "tokenLimit":8192}
 
 
-        self.PROMTER = '''
+        self.PROMTER: str = '''
 your task is to determine whether these words are on any box in the sentence 
 I give you a list of words and its points.
 

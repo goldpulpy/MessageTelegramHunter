@@ -159,7 +159,7 @@ class Session:
 
                 if chat_from_pool["chat"].entity.id == chat.entity.id:
 
-                    message_from_pool = chat_from_pool["messages"]
+                    message_from_pool: list = chat_from_pool["messages"]
 
                     for message in messages:
 
@@ -177,7 +177,7 @@ class Session:
 
                                 self.send_report(chat, message, score)
 
-        self.message_pool = new_message_pool
+        self.message_pool: list = new_message_pool
 
         return new_message_count, trigger_message_count
 
