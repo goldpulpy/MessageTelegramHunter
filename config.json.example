@@ -1,0 +1,8 @@
+{
+    "API_ID": 12345,
+    "API_HASH": "Your API Hash",
+    "SESSION_NAME": "my_session",
+    "FORWARD_TO_ID": 12345,
+    "MESSAGE_POOL": 5,
+    "WAIT_TIME": 5
+}

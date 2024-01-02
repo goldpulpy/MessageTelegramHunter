@@ -1,0 +1,4 @@
+1. Message with issues related to cryptocurrency wallets "Dash Wallet", "Dash Core" or "Dash Electrum" and mentioning a specific type of wallet (ensure that the message contains issues with these wallets and mentions "Dash Wallet", "Dash Core" or "Dash Electrum").
+2. Message with the cryptocurrency "Dash" (only with the mention of Dash and its mention), satisfying the following conditions: the message may mention an exchange, trading platform, or other place where you can buy, sell, store, or earn Dash. But the message must mention only Dash.
+3. Message about donate (ensure that the message is not related to fees or commissions, except in the context of collecting funds for the need of a specific person)
+4. URL that does not match any of the instructions.
