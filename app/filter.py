@@ -27,7 +27,7 @@ class Filter:
 
 
 
-    def filt(self, message: str, temperature: int = 0.5 ) -> float:
+    def filt(self, message: str ) -> float:
 
         total_score: float = 0.0
 
