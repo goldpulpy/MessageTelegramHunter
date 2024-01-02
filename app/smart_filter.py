@@ -23,8 +23,8 @@ class SmartFilter:
 
 
         self.PROMTER: str = '''
-your task is to determine whether these words are on any box in the sentence 
-I give you a list of words and its points.
+your task is to determine whether these words are in the sentence, your start score is 0
+I give you a list of words and its score, 
 
 %s
 
