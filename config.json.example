@@ -4,5 +4,6 @@
     "SESSION_NAME": "my_session",
     "FORWARD_TO_ID": 12345,
     "MESSAGE_POOL": 5,
-    "WAIT_TIME": 5
+    "WAIT_TIME": 5,
+    "REPORT_SCORE": 1.00
 }

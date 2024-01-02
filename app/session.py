@@ -12,7 +12,8 @@ class Session:
 
     def __init__(self, api_id: int = None,
                        api_hash: str = None,
-                       session_name: str = None
+                       session_name: str = None,
+                       report_score: float = None
     ) -> None:
 
         self.api_id: int = api_id
@@ -33,6 +34,10 @@ class Session:
 
         self.message_pool: list = []
 
+        self.session_total_message: int = 0
+        self.session_trigger_message: int = 0
+
+        self.report_score: float = report_score
 
     def check_session(self)-> bool:
 
@@ -130,7 +135,7 @@ class Session:
 
 
     def check_new_message (self, message_pool_limit: int,
-                           smartFilter: object) -> list:
+                                 smartFilter: object) -> list:
 
         new_message_pool: list = []
 
@@ -158,20 +163,19 @@ class Session:
 
                     for message in messages:
 
-
                         if message.id not in [m.id for m in message_from_pool]:
 
                             new_message_count += 1
-
-                            if message.message == '':
-
-                                continue
-
-                            if smartFilter.filt(message.message):
+                            self.session_total_message += 1
+                            
+                            score: float = smartFilter.filt(message.message)
+                            
+                            if score >= self.report_score:
 
                                 trigger_message_count += 1
+                                self.session_trigger_message += 1
 
-                                self.send_report(chat, message)
+                                self.send_report(chat, message, score)
 
         self.message_pool = new_message_pool
 
@@ -186,7 +190,7 @@ class Session:
 
 
 
-    def send_report(self, chat: object, message: str) -> None:
+    def send_report(self, chat: object, message: str, score: float) -> None:
 
         try:
 
@@ -211,11 +215,12 @@ class Session:
                 username,
                 chat.entity.id,
                 message.id,
-                message.message
+                message.message,
+                score,
+                self.session_total_message,
+                self.session_trigger_message
             
         ))
 
         
-        
-
         

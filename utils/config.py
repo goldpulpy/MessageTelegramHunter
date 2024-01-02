@@ -13,6 +13,7 @@ class Config:
         self.FORWARD_TO_ID: int = None
         self.MESSAGE_POOL: int = None
         self.WAIT_TIME: int = None
+        self.REPORT_SCORE: float = None
 
 
     def load_config(self) -> bool:
@@ -33,5 +34,6 @@ class Config:
         self.FORWARD_TO_ID: int = config['FORWARD_TO_ID']
         self.MESSAGE_POOL: int = config['MESSAGE_POOL']
         self.WAIT_TIME: int = config['WAIT_TIME']
+        self.REPORT_SCORE: float = config['REPORT_SCORE']
 
         return True

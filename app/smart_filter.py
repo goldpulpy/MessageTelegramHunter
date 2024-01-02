@@ -1,12 +1,18 @@
 from requests import post
 from pathlib import Path
-import random
+import json
+
+
 
 class SmartFilter:
 
-    def __init__(self, instructions_file: str = "instructions.txt",
-                       words_file: str = "words.txt") -> None:
+    def __init__(self, words_file: str = "words.json") -> None:
         
+
+        self.words: list = None
+        self.words_file: list = words_file
+
+
         self.url: str = "https://openchat.team/api/chat"
 
 
@@ -15,44 +21,24 @@ class SmartFilter:
                             "maxLength":24576,
                             "tokenLimit":8192}
 
-        self.PROMTER: str = '''
-Your job is to check the message, here is a list of instructions. (the message can be anything)
-List of instructions:
+
+        self.PROMTER = '''
+your task is to determine whether these words are on any box in the sentence 
+I give you a list of words and its points.
 
 %s
 
-If the message matches one of the instructions, you must answer True
-If the sentence does not match the instruction completely answer False.
-Answer True or False and nothing else.
-
-Message: "%s"
+your answer should be the total number of points without text for example: 0.5 no need to explain.
+message: "%s"
 '''
-
-
-
-        self.instructions: str = None
-        self.instructions_file: str = instructions_file
-
-
-        self.words: list = None
-        self.words_file: list = words_file
-
 
 
     def load(self) -> bool:
 
         try:
 
-            #ai filter
-            with open(Path(self.instructions_file), 'r') as file:
-                self.instructions: str = file.read()
-
-            #classic filter
             with open(Path(self.words_file), 'r') as file:
-                words_content: str  = file.read()
-                self.words: list  = [word.strip() for word in words_content.split(',')]
-            
-
+                self.words: list  = json.load(file)
 
             return True
 
@@ -62,21 +48,13 @@ Message: "%s"
 
 
 
-    def classic_filter(self, target: str) -> bool:
-        lowercase_target = target.lower()
-
-        return any(variation in lowercase_target for variation in self.words)    
-
-
-    def ai_filter(self, target: str, 
-                   temperature: int = 0.5 
-            ) -> bool:
+    def filt(self, message: str, temperature: int = 0.5 ) -> float:
 
         promt: dict = {
             "model": self.model,
             "messages": [
 
-                {"role":"user","content":self.PROMTER % (self.instructions, target)},
+                {"role":"user","content":self.PROMTER % (self.words, message)},
             ],
             "key":"",
             "prompt":" ",
@@ -86,32 +64,13 @@ Message: "%s"
 
         result: str = post(self.url, json=promt).text
 
-        if "true" in result.lower():
-            
-            return True
+        try:
 
-        return False
+            total_score: float = float(result)
 
+        
+            return total_score
 
+        except:
 
-    def filt(self, target: str, temperature: int = 0.5) -> bool:
-
-        classic_result: bool = self.classic_filter(target)
-
-        ai_result: bool = self.ai_filter(target, temperature)
-
-        if classic_result and ai_result:
-
-            return True
-
-        elif classic_result and not ai_result:
-
-            return random.choice([True, False, True])
-
-        elif ai_result and not classic_result:
-
-            return random.choice([False, True, False])
-
-        else:
-
-            return False
+            return 0
