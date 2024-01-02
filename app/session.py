@@ -167,10 +167,6 @@ class Session:
 
                             new_message_count += 1
                             self.session_total_message += 1
-
-                            if message.message == '':
-
-                                continue
                             
                             score: float = message_filter.filt(message.message)
                             

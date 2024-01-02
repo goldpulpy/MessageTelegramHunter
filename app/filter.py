@@ -28,19 +28,17 @@ class Filter:
 
     def filt(self, message: str) -> float:
         total_score: float = 0.0
-
         unique_words_set = set()
 
-        words_in_message: list = message.lower().split()
+        words_in_message: list = message.lower().split() if message else []
 
+        for word, score in words.items():
 
+            for word_from_message in words_in_message:
 
-        for word, score in self.words.items():
+                if word.lower() in word_from_message and word_from_message not in unique_words_set:
 
-            if word.lower() in words_in_message and word.lower() not in unique_words_set:
-
-                total_score += score
-
-                unique_words_set.add(word.lower())
+                    total_score += score
+                    unique_words_set.add(word_from_message)
 
         return total_score
