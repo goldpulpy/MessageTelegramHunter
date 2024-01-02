@@ -33,8 +33,8 @@ class Filter:
 
         for word, score in self.words.items():
 
-            if word in message:
+            if word.lower() in message.lower():
 
-                score += score
+                total_score += score
 
         return total_score
