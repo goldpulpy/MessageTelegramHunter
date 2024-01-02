@@ -1,5 +1,5 @@
 from utils import Config, Logger
-from app import Session, SmartFilter
+from app import Session, Filter
 
 from time import sleep as wait
 
@@ -7,7 +7,7 @@ from time import sleep as wait
 # Init objects
 config: Config = Config(config="config.json")
 logger: Logger = Logger(output_file="logs.txt")
-smartFilter: SmartFilter = SmartFilter(words_file = "words.json")
+message_filter: Filter = Filter(words_file = "words.json")
 
 def main():
     try:
@@ -57,16 +57,16 @@ def main():
             )
         )
 
-        if not smartFilter.load():
+        if not message_filter.load():
 
             print(logger.log(
-                '[-] [SmartFilter AI] words file found : "%s" - not found' % smartFilter.words_file
+                '[-] [Filter] words file found : "%s" - not found' % message_filter.words_file
             ))
 
             return
 
         print(logger.log(
-            '[+] [SmartFilter AI] loaded successfully <- "%s"' % smartFilter.words_file
+            '[+] [Filter] loaded successfully <- "%s"' % message_filter.words_file
         ))
 
         if not session.push_start(config.FORWARD_TO_ID):
@@ -108,7 +108,7 @@ def main():
 
             try:
 
-                new_message, trigger_message = session.check_new_message(config.MESSAGE_POOL, smartFilter)
+                new_message, trigger_message = session.check_new_message(config.MESSAGE_POOL, message_filter)
 
                 if new_message == 0:
 
@@ -124,7 +124,7 @@ def main():
 
             except Exception as err:
 
-                session.disconnect()
+                wait(120)
 
                 print(logger.log(
                     '[-] Error : %s' % err

@@ -135,7 +135,7 @@ class Session:
 
 
     def check_new_message (self, message_pool_limit: int,
-                                 smartFilter: object) -> list:
+                                 message_filter: object) -> list:
 
         new_message_pool: list = []
 
@@ -168,7 +168,7 @@ class Session:
                             new_message_count += 1
                             self.session_total_message += 1
                             
-                            score: float = smartFilter.filt(message.message)
+                            score: float = message_filter.filt(message.message)
                             
                             if score >= self.report_score:
 

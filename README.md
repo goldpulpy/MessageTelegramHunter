@@ -8,7 +8,7 @@
 - Конфиг `config.json`
 - Слова `words.json`
 
-Telegram SMART Hunter программное обеспечение для Telegram на основе AI.
+Telegram Message Hunter программное обеспечение для Telegram.
 Ищет сообщения триггеры в чатах телеграм и отправляет их в определенный чат.
 
 ## Настройки
