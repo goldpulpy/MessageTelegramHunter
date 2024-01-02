@@ -12,6 +12,9 @@ REPORT: str = """
 💬 Session total messages: <code>%i</code>
 🔥 Session trigger messages: <code>%i</code>
 """
+
+
+
 PUSH_START: str = """
 🤖 Message Telegram Hunter <code>v2</code>
 
