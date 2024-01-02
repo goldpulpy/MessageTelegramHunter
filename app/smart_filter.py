@@ -28,7 +28,8 @@ I give you a list of words and its score,
 
 %s
 
-your answer should be the total number of points without text for example: 0.5 no need to explain.
+If a sentence has the same word twice, you don't have to give score again.
+Your answer should be the total number of points without text for example: 0.5 no need to explain.
 message: "%s"
 '''
 
