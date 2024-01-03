@@ -13,7 +13,8 @@ class Session:
     def __init__(self, api_id: int = None,
                        api_hash: str = None,
                        session_name: str = None,
-                       report_score: float = None
+                       report_score: float = None,
+                       memory_limit: int = None
     ) -> None:
 
         self.api_id: int = api_id
@@ -36,8 +37,12 @@ class Session:
 
         self.session_total_message: int = 0
         self.session_trigger_message: int = 0
+        self.session_spam_message: int = 0
 
         self.report_score: float = report_score
+
+        self.memory: list = []
+        self.memory_limit: int = memory_limit
 
     def check_session(self)-> bool:
 
@@ -152,7 +157,7 @@ class Session:
 
             new_message_pool.append({
                 "chat": chat,
-                "messages": [message for message in messages]
+                "messages": messages
             })
 
             for chat_from_pool in self.message_pool:
@@ -172,10 +177,18 @@ class Session:
                             
                             if score >= self.report_score:
 
+                                if message.message in set(self.memory):
+
+                                    self.session_spam_message += 1
+
+                                    continue
+
                                 trigger_message_count += 1
                                 self.session_trigger_message += 1
 
                                 self.send_report(chat, message, score)
+
+                                self.memory = [message.message] + [m for m in self.memory if m != message.message][:self.memory_limit - 1]
 
         self.message_pool: list = new_message_pool
 
@@ -218,7 +231,8 @@ class Session:
                 message.message,
                 score,
                 self.session_total_message,
-                self.session_trigger_message
+                self.session_trigger_message,
+                self.session_spam_message
             
         ))
 

@@ -11,6 +11,7 @@ REPORT: str = """
 📊 TMH STATS:
 💬 Session total messages: <code>%i</code>
 🔥 Session trigger messages: <code>%i</code>
+🗑 Session spam messages: <code>%i</code>
 """
 
 
