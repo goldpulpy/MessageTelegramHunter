@@ -33,12 +33,13 @@ class Filter:
         unique_words_set = set()
 
         words_in_message: list = message.lower().split() if message else []
-
+        
         for word, score in self.words.items():
 
-            if word.lower() in words_in_message and words_in_message not in unique_words_set:
+            if word.lower() in words_in_message and word.lower() not in unique_words_set:
 
                 total_score += score
-                unique_words_set.add(words_in_message)
+
+                unique_words_set.add(word.lower())
 
         return total_score
