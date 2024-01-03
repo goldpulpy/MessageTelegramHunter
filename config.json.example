@@ -5,5 +5,6 @@
     "FORWARD_TO_ID": 12345,
     "MESSAGE_POOL": 5,
     "WAIT_TIME": 5,
-    "REPORT_SCORE": 1.00
+    "REPORT_SCORE": 1.00,
+    "MEMORY_LIMIT": 100
 }

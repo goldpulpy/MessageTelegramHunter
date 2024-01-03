@@ -7,7 +7,7 @@ from time import sleep as wait
 # Init objects
 config: Config = Config(config="config.json")
 logger: Logger = Logger(output_file="logs.txt")
-message_filter: Filter = Filter(words_file = "words.json")
+
 
 def main():
     try:
@@ -29,6 +29,9 @@ def main():
         print(logger.log(
             '[+] [File] Config loaded successfully <- "%s"' % config.config
             ))
+
+        message_filter: Filter = Filter(words_file = "words.json",
+                                        memory_limit = config.MEMORY_LIMIT)
 
         session: Session = Session(
             api_id=config.API_ID, 

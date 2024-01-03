@@ -6,11 +6,15 @@ import json
 
 class Filter:
 
-    def __init__(self, words_file: str = "words.json") -> None:
+    def __init__(self, words_file: str = "words.json",
+                       memory_limit: int = 100) -> None:
         
 
         self.words: list = None
         self.words_file: list = words_file
+
+        self.memory: list = []
+        self.memory_limit: int = memory_limit
 
     def load(self) -> bool:
 
@@ -33,7 +37,11 @@ class Filter:
         unique_words_set = set()
 
         words_in_message: list = message.lower().split() if message else []
-        
+
+        if message.lower() in self.memory:
+            return total_score
+
+
         for word, score in self.words.items():
 
             if word.lower() in words_in_message and word.lower() not in unique_words_set:
@@ -41,5 +49,10 @@ class Filter:
                 total_score += score
 
                 unique_words_set.add(word.lower())
+
+        self.memory.append(message.lower())
+
+        if len(self.memory) > self.memory_limit:
+            self.memory.pop(0)
 
         return total_score
