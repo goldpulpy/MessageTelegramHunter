@@ -32,7 +32,7 @@ class Filter:
 
         words_in_message: list = message.lower().split() if message else []
 
-        for word, score in words.items():
+        for word, score in self.words.items():
 
             for word_from_message in words_in_message:
 
