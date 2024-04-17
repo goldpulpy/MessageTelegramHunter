@@ -9,7 +9,6 @@ config: Config = Config(config="config.json")
 logger: Logger = Logger(output_file="logs.txt")
 message_filter: Filter = Filter(words_file = "words.json")
 
-
 def main():
     try:
 
